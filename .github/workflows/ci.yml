@@ -2,9 +2,14 @@ name: .NET MAUI CI
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - main
+      - dev
+      - "**"
   pull_request:
-    branches: [ develop ]
+    branches:
+      - main
+      - dev
 
 jobs:
   build-and-test:
