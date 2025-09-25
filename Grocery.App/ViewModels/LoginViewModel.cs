@@ -1,5 +1,4 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
@@ -27,14 +26,14 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        private void Login()
+        private async void Login()
         {
             Client? authenticatedClient = _authService.Login(Email, Password);
             if (authenticatedClient != null)
             {
                 LoginMessage = $"Welkom {authenticatedClient.Name}!";
                 _global.Client = authenticatedClient;
-                Application.Current.MainPage = new AppShell();
+                await Shell.Current.GoToAsync("//GroceryListsView");
             }
             else
             {
