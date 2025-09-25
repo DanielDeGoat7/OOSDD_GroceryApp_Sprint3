@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Grocery.App;
 using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Models;
 using System;
@@ -19,7 +20,7 @@ public partial class RegisterViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void Register()
+    public async Task Register()
     {
         try
         {
@@ -27,10 +28,13 @@ public partial class RegisterViewModel : ObservableObject
                 id: _clientRepository.GetAll().Count + 1,
                 name: Name,
                 emailAddress: EmailAddress,
-                password: Password // In productie: hash het wachtwoord!
+                password: Password
             );
             _clientRepository.Add(client);
             Message = "Registratie gelukt!";
+
+            // Navigatie naar het boodschappenlijst-scherm
+            await Shell.Current.GoToAsync("//GroceryListsView");
         }
         catch (Exception ex)
         {

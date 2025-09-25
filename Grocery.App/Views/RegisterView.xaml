@@ -2,9 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:Grocery.App.ViewModels"
              x:Class="Grocery.App.Views.RegisterView">
-    <ContentPage.BindingContext>
-        <viewmodels:RegisterViewModel />
-    </ContentPage.BindingContext>
     <VerticalStackLayout Padding="20">
         <Entry Placeholder="Naam" Text="{Binding Name}" />
         <Entry Placeholder="E-mailadres" Text="{Binding EmailAddress}" Keyboard="Email" />
