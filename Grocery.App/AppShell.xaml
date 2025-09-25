@@ -7,12 +7,16 @@
     Shell.FlyoutBehavior="Disabled"
     Title="GroceryApp">
 
+    <!-- LoginView als eerste pagina -->
+    <ShellContent Route="LoginView" ContentTemplate="{DataTemplate local:LoginView}" />
+
     <TabBar>
         <Tab Title="Home" Icon="grocerylist.png">
-            <ShellContent Title="Boodschappenlijsten" ContentTemplate="{DataTemplate local:GroceryListsView}" />
+            <ShellContent Route="GroceryListsView" Title="Boodschappenlijsten" ContentTemplate="{DataTemplate local:GroceryListsView}" />
         </Tab>
         <Tab Title="Producten" Icon="products.png">
             <ShellContent Title="Producten" ContentTemplate="{DataTemplate local:ProductView}" />
         </Tab>
     </TabBar>
+    <ShellContent Route="RegisterView" ContentTemplate="{DataTemplate local:RegisterView}" />
 </Shell>

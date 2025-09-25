@@ -17,6 +17,13 @@ namespace Grocery.Core.Data.Repositories
             ];
         }
 
+        public void Add(Client client)
+        {
+            if (clientList.Any(c => c.EmailAddress.Equals(client.EmailAddress, StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException("Emailadres bestaat al");
+            
+            clientList.Add(client);
+        }
         public Client? Get(string email)
         {
             Client? client = clientList.FirstOrDefault(c => c.EmailAddress.Equals(email));
