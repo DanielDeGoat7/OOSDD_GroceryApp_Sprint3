@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 
@@ -9,6 +10,7 @@ namespace Grocery.App.ViewModels
     {
         private readonly IAuthService _authService;
         private readonly GlobalViewModel _global;
+        private readonly IClientRepository _clientRepository;
 
         [ObservableProperty]
         private string email = "user3@mail.com";
@@ -19,20 +21,23 @@ namespace Grocery.App.ViewModels
         [ObservableProperty]
         private string loginMessage;
 
-        public LoginViewModel(IAuthService authService, GlobalViewModel global)
+        public LoginViewModel(IAuthService authService, GlobalViewModel global, IClientRepository clientRepository)
         { //_authService = App.Services.GetServices<IAuthService>().FirstOrDefault();
             _authService = authService;
             _global = global;
+            _clientRepository = clientRepository;
         }
 
         [RelayCommand]
-        private async void Login()
+        public async Task Login()
         {
-            Client? authenticatedClient = _authService.Login(Email, Password);
-            if (authenticatedClient != null)
+            var client = _clientRepository.Get(Email);
+            if (client != null && client.Password == Password) // Gebruik hier eventueel PasswordHelper
             {
-                LoginMessage = $"Welkom {authenticatedClient.Name}!";
-                _global.Client = authenticatedClient;
+                LoginMessage = $"Welkom {client.Name}!";
+                _global.Client = client;
+                // Succesvol ingelogd
+                // Navigatie naar hoofdscherm, bijvoorbeeld:
                 await Shell.Current.GoToAsync("//GroceryListsView");
             }
             else

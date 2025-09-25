@@ -34,7 +34,7 @@ public partial class RegisterViewModel : ObservableObject
             Message = "Registratie gelukt!";
 
             // Navigatie naar het boodschappenlijst-scherm
-            await Shell.Current.GoToAsync("//GroceryListsView");
+            await Shell.Current.GoToAsync("//LoginView");
         }
         catch (Exception ex)
         {
