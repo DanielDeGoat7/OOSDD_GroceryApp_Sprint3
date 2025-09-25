@@ -1,41 +1,34 @@
-name: MAUI Unit Tests
+name: .NET MAUI CI
 
 on:
-  release:
-    types: [created]
   push:
-    branches:
-      - main
-      - dev
-      - "**"
+    branches: [ '*' ]
   pull_request:
-    branches:
-      - main
-      - dev
+    branches: [ '*' ]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: windows-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 8.0.x
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Install MAUI workloads
-        run: dotnet workload install maui
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: Restore dependencies
-        run: dotnet restore Grocery.sln
+    - name: Build
+      run: dotnet build --no-restore
 
-      - name: Build solution
-        run: dotnet build Grocery.sln --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-build --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults
 
-      - name: Run unit tests
-        run: dotnet test TestCore/TestCore.csproj --configuration Release --no-restore --verbosity normal
-
-      - name: Run unit tests
-        run: dotnet test TestCore/TestCore.csproj -f net8.0 --configuration Release --no-restore --verbosity normal
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: ./TestResults
