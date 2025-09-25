@@ -45,3 +45,4 @@ jobs:
         name: .NET Test Results
         path: ./TestResults/test-results.trx
         reporter: dotnet-trx
+
