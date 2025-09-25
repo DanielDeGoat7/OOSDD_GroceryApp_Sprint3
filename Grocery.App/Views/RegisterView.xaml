@@ -1,0 +1,12 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Grocery.App.ViewModels"
+             x:Class="Grocery.App.Views.RegisterView">
+    <VerticalStackLayout Padding="20">
+        <Entry Placeholder="Naam" Text="{Binding Name}" />
+        <Entry Placeholder="E-mailadres" Text="{Binding EmailAddress}" Keyboard="Email" />
+        <Entry Placeholder="Wachtwoord" Text="{Binding Password}" IsPassword="True" />
+        <Button Text="Registreren" Command="{Binding RegisterCommand}" />
+        <Label Text="{Binding Message}" TextColor="Red" />
+    </VerticalStackLayout>
+</ContentPage>
